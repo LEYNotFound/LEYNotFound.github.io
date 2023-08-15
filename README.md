@@ -60,22 +60,25 @@ int main(){
 ```c++
 #include<bits/stdc++.h>
 using namespace std;
-int n,a[1001],dp[1001];
+long long n,m,a[10]={0,10,20,50,100},dp[3001][3001];
 int main(){
-    cin>>n;
-    for (int i = 0; i < n; i ++ ){
-    	cin>>a[i];
+    cin>>m;
+    n=4;
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
     }
-    int maxx = 0;
-    for (int i = 0; i < n; i ++ )
-    {
-        dp[i] = a[i];
-        for (int j = 0; j < i; j ++ )
-            if (a[i] > a[j])
-                dp[i] = max(dp[i], dp[j] + a[i]);
-        maxx = max(maxx, dp[i]);
+    dp[0][0]=1;
+    for(int i=1;i<=n;i++){
+        dp[i][0]=1;
+        for(int j=0;j<=m;j++){
+            if(j>=a[i]){
+                dp[i][j]=dp[i-1][j]+dp[i][j-a[i]];
+            }else{
+                dp[i][j]=dp[i-1][j];
+            }
+        }
     }
-    cout<<maxx;
+    cout<<dp[n][m];
     return 0;
 }
 ```
